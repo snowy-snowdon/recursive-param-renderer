@@ -10,10 +10,21 @@ import {
 } from "react-router-dom";
 
 const PARAMS = [
-  { id: 0, name: "One", values: [1, 2, 3] },
-  { id: 1, name: "Two", values: [0, 3] },
-  { id: 2, name: "Three", values: [0, 1, 3] },
-  { id: 3, name: "Four", values: [1, 2] }
+  {
+    id: "process",
+    name: "Process",
+    values: ["details", "associations", "comments", "tasks"]
+  },
+  {
+    id: "associations",
+    name: "Associations",
+    values: ["plans", "templates", "documents"]
+  },
+  {
+    id: "tasks",
+    name: "Tasks",
+    values: ["details", "associations", "external-references"]
+  }
 ];
 
 const find = (id: any) => {
@@ -23,16 +34,21 @@ const find = (id: any) => {
 const Entity = () => {
   let { url } = useRouteMatch();
   let { id } = useParams<any>();
-  let entity: any = find(parseInt(id));
+  let entity: any = find(id);
 
-  return (
+  return entity?.values?.length ? (
     <div>
-      <h3>{entity.name} | Tab</h3>
-
-      <ul>
-        {entity?.values.map((value: any) => (
-          <li key={value}>
-            <Link to={`${url}/${value}`}>{find(value)?.name}</Link>
+      <h4>{entity?.name} Tabs</h4>
+      <ul
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          border: "0.1rem solid red"
+        }}
+      >
+        {entity?.values?.map((value: any) => (
+          <li key={value} style={{ border: "0.1rem solid black" }}>
+            <Link to={`${url}/${value}`}>{value}</Link>
           </li>
         ))}
       </ul>
@@ -43,31 +59,12 @@ const Entity = () => {
         </Route>
       </Switch>
     </div>
-  );
-};
-
-export const EntityDisplay = () => {
-  let { url } = useRouteMatch();
-  let { id } = useParams<any>();
-  let entity: any = find(parseInt(id));
-
-  return (
-    <div>
-      <h3>{entity.name} Tab</h3>
-
-      <ul>
-        {entity?.values.map((value: any) => (
-          <li key={value}>
-            <Link to={`${url}/${value}`}>{find(value)?.name}</Link>
-          </li>
-        ))}
-      </ul>
-
-      <Switch>
-        <Route path={`${url}/:id`}>
-          <Entity />
-        </Route>
-      </Switch>
+  ) : (
+    <div style={{ margin: "2rem", border: "0.3rem solid green" }}>
+      <p>
+        <b>{String(id).toUpperCase()}</b>
+      </p>
+      <p>{url}</p>
     </div>
   );
 };
@@ -80,7 +77,7 @@ export default function ParamParser() {
           <Entity />
         </Route>
         <Route path="/">
-          <Redirect to="/0" />
+          <Redirect to="/process" />
         </Route>
       </Switch>
     </Router>
