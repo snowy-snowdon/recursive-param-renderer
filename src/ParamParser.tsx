@@ -18,12 +18,17 @@ const PARAMS = [
   {
     id: "associations",
     name: "Associations",
-    values: ["plans", "templates", "documents"]
+    values: ["plans", "templates", "documents", "combo"]
   },
   {
     id: "tasks",
     name: "Tasks",
     values: ["details", "associations", "external-references"]
+  },
+  {
+    id: "combo",
+    name: "Combo",
+    values: ["process", "tasks"]
   }
 ];
 
