@@ -6,7 +6,8 @@ import {
   BrowserRouter as Router,
   Switch,
   useParams,
-  useRouteMatch
+  useRouteMatch,
+  NavLink
 } from "react-router-dom";
 
 const PARAMS = [
@@ -53,7 +54,16 @@ const Entity = () => {
       >
         {entity?.values?.map((value: any) => (
           <li key={value} style={{ border: "0.1rem solid black" }}>
-            <Link to={`${url}/${value}`}>{value}</Link>
+            <NavLink
+              to={`${url}/${value}`}
+              activeStyle={{
+                fontWeight: "bold",
+                color: "green",
+                textDecoration: "none"
+              }}
+            >
+              {value}
+            </NavLink>
           </li>
         ))}
       </ul>
